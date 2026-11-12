@@ -7,9 +7,10 @@
 [![Origin: Brazil](https://img.shields.io/badge/Feito%20no-Brasil%20%F0%9F%87%A7%F0%9F%87%B7-green.svg)](#-projeto-brasileiro-open-source)
 [![Compatible: Claude Code](https://img.shields.io/badge/Compat%C3%ADvel-Claude%20Code-purple.svg)](#-instalação)
 [![MCP: pixel-mcp](https://img.shields.io/badge/MCP-pixel--mcp%20v0.5.0-orange.svg)](https://github.com/willibrandon/pixel-mcp)
+[![npm](https://img.shields.io/npm/v/omni-sprite.svg)](https://www.npmjs.com/package/omni-sprite)
 [![Aseprite: 1.3.10+](https://img.shields.io/badge/Aseprite-1.3.10%2B-teal.svg)](https://www.aseprite.org)
 
-A OmniSprite ensina a IA um fluxo cirúrgico — **briefing → orientação → paleta → camadas → sombreamento → revisão → animação** — e controla o Aseprite pelo servidor MCP [`pixel-mcp`](https://github.com/willibrandon/pixel-mcp). Um único comando instala tudo e, se você não tem o Aseprite, a IA oferece baixar o código do GitHub e compilar para você.
+A OmniSprite ensina a IA um fluxo cirúrgico — **briefing → orientação → paleta → camadas → sombreamento → revisão → animação** — e controla o Aseprite pelo servidor MCP [`pixel-mcp`](https://github.com/willibrandon/pixel-mcp). Um único comando (`npx omni-sprite install`) instala a skill, o comando `/sprite` e o servidor MCP e, se você não tem o Aseprite, a IA oferece baixar o código do GitHub e compilar para você.
 
 | 😴 Idle (6 frames) | 🚶 Andar (8 frames) | ⚔️ Ataque (6 frames) |
 |:---:|:---:|:---:|
@@ -43,7 +44,7 @@ A **OmniSprite** nasceu no Brasil para resolver um problema prático: IAs desenh
 
 Uma skill (`SKILL.md` + referências + scripts) que combina:
 
-1. **🧭 Orientação e pose:** regras para travar a vista, o lado de olhar, quem fica na frente de quem e qual prop vai em qual mão ([`orientation-and-pose.md`](skills/omni-sprite/references/orientation-and-pose.md)).
+1. **🧭 Orientação e pose:** regras para travar a vista, o lado de olhar, quem fica na frente de quem e qual prop vai em qual mão ([`orientation-and-pose.md`](references/orientation-and-pose.md)).
 2. **🎨 12 estilos prontos:** Game Boy, NES, SNES, GBA, arcade, HD pixel, dark fantasy, cyberpunk, chibi, isométrico, sem contorno (painterly) e 1-bit.
 3. **📐 Níveis de tamanho:** de ícones 32×32 a cenas 480×270.
 4. **🎞️ Animação por esqueleto:** ciclos de idle, andar, ataque e mais, com contagem de frames, tempos e IK de 2 ossos.
@@ -80,65 +81,119 @@ flowchart TD
 
 ### 🎨 Estilos
 
-Game Boy 4 cores · NES 8-bit · SNES 16-bit · GBA chunky · arcade neo · **HD pixel (padrão)** · dark fantasy · cyberpunk neon · chibi fofo · isométrico · painterly sem contorno · 1-bit. Cada preset fixa tela, número de cores, contorno, degraus de sombra, dithering e antialiasing: [`styles.md`](skills/omni-sprite/references/styles.md).
+Game Boy 4 cores · NES 8-bit · SNES 16-bit · GBA chunky · arcade neo · **HD pixel (padrão)** · dark fantasy · cyberpunk neon · chibi fofo · isométrico · painterly sem contorno · 1-bit. Cada preset fixa tela, número de cores, contorno, degraus de sombra, dithering e antialiasing: [`styles.md`](references/styles.md).
 
 ### 🎞️ Animação
 
-Receitas de frames e tempos para idle, andar, correr, pular, ataque, dano, morte e conjuração, mais a abordagem de esqueleto (balanço do quadril, trajetória dos pés em apoio/passada, IK de 2 ossos, atraso de fase da capa e do penacho): [`animation.md`](skills/omni-sprite/references/animation.md). Exporta GIF, PNG, spritesheet e JSON (tags e durações) para motores de jogo.
+Receitas de frames e tempos para idle, andar, correr, pular, ataque, dano, morte e conjuração, mais a abordagem de esqueleto (balanço do quadril, trajetória dos pés em apoio/passada, IK de 2 ossos, atraso de fase da capa e do penacho): [`animation.md`](references/animation.md). Exporta GIF, PNG, spritesheet e JSON (tags e durações) para motores de jogo.
 
 ---
 
-## ⚡ Como usar
+## ⚡ Comandos & Modos de Uso
 
-Basta pedir. A skill é acionada por pedidos de sprite, tile, ícone, pixel art, spritesheet ou animação.
+Depois de instalar, digite `/sprite` no seu agente (a skill também é acionada por pedidos naturais de sprite, tile, ícone, pixel art, spritesheet ou animação):
 
 ```text
-omni-sprite: cavaleiro dark fantasy 128×128, vista lateral, com idle e andar
-Crie um conjunto de poções 64×64 em estilo SNES 16-bit com a paleta pico-8
-Transforme esta imagem de referência em um personagem 96×96 estilo GBA
+/sprite [descrição] [flags]
 ```
 
-A IA começa com uma rodada curta de `grill-me` (perguntas independentes juntas, cada uma com resposta recomendada, para você só dizer "sim"): o que é, vista/câmera, estilo, tamanho, animação e paleta. Depois desenha.
+### Exemplos práticos
+```bash
+# ⚔️ Personagem completo com animações
+/sprite cavaleiro dark fantasy --tamanho L --anim idle,walk,attack
+
+# 🧪 Conjunto de itens em estilo e paleta definidos
+/sprite poções de vida e mana --tamanho M --estilo snes --paleta pico-8
+
+# 🖼️ A partir de uma imagem de referência
+/sprite personagem 96×96 estilo GBA --paleta ref:./referencia.png
+
+# 🩺 Só diagnosticar o ambiente (Aseprite encontrado? MCP registrado?)
+/sprite --doctor
+
+# 🛠️ Forçar o fluxo de compilar o Aseprite do código-fonte
+/sprite --compilar
+```
+
+### Flags disponíveis
+- `--tamanho S|M|L|XL|cena`: nível de tamanho (padrão `L`, 128×128).
+- `--estilo <preset>`: um dos 12 estilos (padrão `hd-pixel`).
+- `--vista lateral|3-4|frontal|iso`: vista travada (padrão lateral, voltado para a direita).
+- `--anim idle,walk,attack,...`: ciclos a animar.
+- `--paleta <slug-lospec|#hex,#hex|ref:caminho>`: paleta dada, do Lospec ou derivada de uma imagem.
+- `--doctor` / `--compilar`: diagnóstico e compilação do Aseprite.
+
+Flags informadas dispensam a pergunta correspondente; o que faltar vai para uma rodada curta de `grill-me` (perguntas independentes juntas, cada uma com resposta recomendada, para você só dizer "sim").
 
 ---
 
-## 📦 Instalação
+## 📦 Como Instalar nas Suas IAs
 
-### 1. Um comando (recomendado)
+### 1. Instalador Interativo via Terminal (Recomendado)
+Execute `npx omni-sprite install` para abrir o menu com caixas de seleção. Use as **Setas** para navegar, **Espaço** para marcar as IAs e **Enter** para concluir:
 
-```powershell
-# Windows (PowerShell)
-.\install.ps1                                  # detecta o Aseprite sozinho
-.\install.ps1 -AsepritePath "C:\caminho\aseprite.exe"
-```
 ```bash
-# macOS / Linux
-./install.sh                                   # ou ./install.sh /caminho/aseprite
+npx omni-sprite install
 ```
 
-O instalador copia `skills/*` para `~/.claude/skills`, baixa uma versão fixa do `pixel-mcp`, **confere o SHA-256**, grava a configuração e registra o servidor (`claude mcp add --scope user aseprite …`). Reinicie o cliente e confirme com `claude mcp list` que `aseprite` aparece.
+```text
+🎮 OmniSprite Installer
+? Em quais IAs você deseja instalar a OmniSprite? (Espaço: marcar/desmarcar | Enter: confirmar)
+ ❯ [✓] 🪐 Antigravity / Gemini CLI (~/.gemini/config/skills/sprite)
+   [✓] 🟣 Claude Code (~/.claude/skills/sprite)
+   [ ] ⚡ Cursor IDE (.cursor/skills/sprite + .cursor/rules/sprite.mdc)
+   [ ] 🌊 Windsurf (.windsurf/skills/sprite + .windsurfrules)
+   [ ] 📁 Projeto Local (./sprite/)
+? Instalar/registrar agora o servidor MCP do Aseprite (pixel-mcp)? (Y/n)
+```
 
-Requisitos: Aseprite 1.3.10+ (não incluído) · Claude Code (ou outro cliente MCP; adapte o registro) · Python 3 só para o script auxiliar e o exemplo.
+O instalador copia `SKILL.md`, `references/` e `scripts/`, instala junto a skill **`grill-me`** (de Matt Pocock, MIT; se você já tiver uma, a sua é mantida) e, se você aceitar, baixa o `pixel-mcp` com **checagem SHA-256**, grava a configuração e registra o servidor no Claude Code.
+
+> Cursor e Windsurf: a instalação cria a pasta da skill e um ponteiro de regra; esse caminho é **experimental** (testei os arquivos gerados, não o comportamento dentro dessas IDEs).
+
+#### Instalação direta sem menu (headless)
+```bash
+# Todas as IAs suportadas de uma vez, com MCP:
+npx omni-sprite install all --mcp
+
+# IAs específicas, sem mexer no MCP:
+npx omni-sprite install claude antigravity --no-mcp
+
+# Direto do repositório no GitHub:
+npx github:LimaEdu-7x/omni-sprite install
+
+# Só o MCP (com caminho do Aseprite, se a detecção não achar):
+npx omni-sprite mcp --aseprite "C:\caminho\aseprite.exe"
+
+# Diagnóstico do ambiente:
+npx omni-sprite doctor
+```
 
 ### 2. Instalação manual
-
 ```bash
+git clone https://github.com/LimaEdu-7x/omni-sprite.git && cd omni-sprite
+
 # Claude Code
-mkdir -p ~/.claude/skills && cp -r skills/omni-sprite skills/grill-me ~/.claude/skills/
+mkdir -p ~/.claude/skills/sprite ~/.claude/skills/grill-me
+cp -r SKILL.md references scripts ~/.claude/skills/sprite/ && cp -r bundled/grill-me/. ~/.claude/skills/grill-me/
 
 # Antigravity / Gemini CLI
-mkdir -p ~/.gemini/config/skills && cp -r skills/omni-sprite skills/grill-me ~/.gemini/config/skills/
+mkdir -p ~/.gemini/config/skills/sprite ~/.gemini/config/skills/grill-me
+cp -r SKILL.md references scripts ~/.gemini/config/skills/sprite/ && cp -r bundled/grill-me/. ~/.gemini/config/skills/grill-me/
 ```
+O MCP também pode ser instalado à mão: `scripts/install-mcp.ps1` (Windows) ou `scripts/install-mcp.sh` (macOS/Linux).
+
+Requisitos: Node 16.7+ (para o `npx`), Aseprite 1.3.10+ (não incluído), Claude Code ou outro cliente MCP, Python 3 só para o script auxiliar e o exemplo.
 
 ### 3. 🕹️ Não tem Aseprite?
 
-As skills instalam do mesmo jeito. No primeiro pedido, a IA pergunta o que você prefere:
+As skills instalam do mesmo jeito. No primeiro `/sprite`, a IA pergunta o que você prefere:
 
 1. **Compilar para mim** — clona o código do Aseprite, baixa o Skia pré-compilado correto e compila com CMake/Ninja (`build-aseprite.ps1` / `.sh`; 10–40 min, 3–5 GB).
 2. **Eu instalo sozinho** — Steam, itch.io ou aseprite.org (pago; apoia o desenvolvedor).
 3. **Pular o Aseprite** — desenhar com Python/Pillow usando as mesmas regras de estilo (sem arquivo `.aseprite`).
 
-> O Aseprite é *source-available* sob EULA própria: compilar para uso pessoal é permitido, redistribuir o binário não. Os scripts de compilação seguem o procedimento documentado do Aseprite e **não foram executados de ponta a ponta em todas as plataformas**; o `INSTALL.md` do código clonado é a referência se algum passo falhar. Detalhes: [`build-aseprite.md`](skills/omni-sprite/references/build-aseprite.md).
+> O Aseprite é *source-available* sob EULA própria: compilar para uso pessoal é permitido, redistribuir o binário não. Os scripts de compilação seguem o procedimento documentado do Aseprite e **não foram executados de ponta a ponta em todas as plataformas**; o `INSTALL.md` do código clonado é a referência se algum passo falhar. Detalhes: [`build-aseprite.md`](references/build-aseprite.md).
 
 ---
 
@@ -155,10 +210,12 @@ As skills instalam do mesmo jeito. No primeiro pedido, a IA pergunta o que você
 ## 🗂️ Estrutura do repositório
 
 ```text
-install.ps1 / install.sh              instalação em um comando
-skills/
-  omni-sprite/                        SKILL.md + references/ + scripts/
-  grill-me/                           skill de entrevista incluída (Matt Pocock, MIT, em inglês, sem alterações)
+SKILL.md                              a skill (comando /sprite)
+bin/sprite.js                         instalador npx (menu interativo ou direto)
+package.json                          pacote npm "omni-sprite"
+references/                           estilos, paleta, animação, orientação, checklist, recursos, build
+scripts/                              find-aseprite, install-mcp, build-aseprite, grid_to_pixels.py
+bundled/grill-me/                     skill de entrevista incluída (Matt Pocock, MIT, em inglês, sem alterações)
 examples/knight/                      rig.py, make_anims.py, mcp_client.py, out/ (.aseprite, GIF, sheets, JSON)
 THIRD_PARTY_NOTICES.md  LICENSE
 ```
@@ -173,7 +230,7 @@ Desenhar por chamadas de ferramenta é lento e o modelo não enxerga a tela sem 
 
 ## 🏆 Créditos & Referências
 
-- **[Matt Pocock — skill grilling / grill-me](https://github.com/mattpocock/skills)** — © 2026, MIT. Incluída sem alterações em `skills/grill-me/`.
+- **[Matt Pocock — skill grilling / grill-me](https://github.com/mattpocock/skills)** — © 2026, MIT. Incluída sem alterações em `bundled/grill-me/`.
 - **[pixel-mcp](https://github.com/willibrandon/pixel-mcp)** — de Brandon Williams (willibrandon), MIT. Baixado na instalação, não redistribuído.
 - **[Aseprite](https://www.aseprite.org)** — Igara Studio / David Capello. Não incluído.
 - **[Lospec](https://lospec.com)**, **[SLYNYRD Pixelblog](https://www.slynyrd.com/blog)**, **[Saint11](https://saint11.art/blog/pixel-art-tutorials/)**, **[Derek Yu](https://derekyu.com/makegames/pixelart.html)** — estudo de paletas, sombreamento e animação.

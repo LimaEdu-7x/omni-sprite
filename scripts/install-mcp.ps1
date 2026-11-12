@@ -24,7 +24,11 @@ $expected = ((Get-Content (Join-Path $dir "checksums.txt") | Select-String $arch
 $actual = (Get-FileHash (Join-Path $dir $archive) -Algorithm SHA256).Hash
 if ($expected.ToLower() -ne $actual.ToLower()) { throw "Checksum SHA-256 não confere para $archive" }
 
-tar -xzf (Join-Path $dir $archive) -C $dir
+# tar.exe do Windows (o tar do Git Bash lê "C:" como máquina remota)
+$tar = Join-Path $env:SystemRoot "System32\tar.exe"
+if (-not (Test-Path $tar)) { $tar = "tar" }
+& $tar -xzf (Join-Path $dir $archive) -C $dir
+if ($LASTEXITCODE -ne 0 -or -not (Test-Path (Join-Path $dir "pixel-mcp.exe"))) { throw "Falha ao extrair $archive" }
 
 $cfgDir = Join-Path $HOME ".config\pixel-mcp"
 New-Item -ItemType Directory -Force $cfgDir | Out-Null

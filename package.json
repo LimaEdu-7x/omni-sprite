@@ -1,0 +1,56 @@
+{
+  "name": "omni-sprite",
+  "version": "1.0.0",
+  "description": "Skill brasileira para agentes de IA: pixel art grande, detalhada e com estilo definido, mais animações, direto no Aseprite via MCP (pixel-mcp). Comando /sprite.",
+  "bin": {
+    "omni-sprite": "bin/sprite.js",
+    "sprite-skill": "bin/sprite.js"
+  },
+  "scripts": {
+    "start": "node bin/sprite.js"
+  },
+  "keywords": [
+    "ai",
+    "skill",
+    "agent-skill",
+    "brazil",
+    "pixel-art",
+    "aseprite",
+    "sprite",
+    "animation",
+    "spritesheet",
+    "mcp",
+    "claude",
+    "antigravity",
+    "cursor",
+    "windsurf",
+    "pt-br"
+  ],
+  "author": "LimaEdu-7x",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LimaEdu-7x/omni-sprite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LimaEdu-7x/omni-sprite/issues"
+  },
+  "homepage": "https://github.com/LimaEdu-7x/omni-sprite#readme",
+  "engines": {
+    "node": ">=16.7"
+  },
+  "files": [
+    "SKILL.md",
+    "bin",
+    "references",
+    "scripts",
+    "bundled",
+    "examples/knight/*.py",
+    "THIRD_PARTY_NOTICES.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "prompts": "^2.4.2"
+  }
+}

@@ -4,7 +4,7 @@
 1. **Dada pelo usuário** → use como está; só acrescente degraus de rampa que faltem e avise.
 2. **Do Lospec** → navegue em `https://lospec.com/palette-list` (filtre por número de cores/tag). Baixe o hex: `https://lospec.com/palette-list/<slug>.hex` (um hex por linha, sem `#`).
 3. **De imagem de referência** → `analyze_reference` (k-means) → reduza ao orçamento abaixo → reagrupe em rampas.
-4. **Gerada** → monte as rampas à mão (abaixo) ou use a skill `omni-color`, que também exporta a paleta para `.hex` do Aseprite.
+4. **Gerada** → monte as rampas à mão (abaixo) ou use a skill `/color`, que também exporta a paleta para `.hex` do Aseprite.
 
 ## Orçamento de cores
 S 8–16 · M 16–24 · L 24–40 · XL/Cena 32–64. Mais cores ≠ mais detalhe; cada cor extra precisa ter função (degrau de rampa, acento, tom de pele).

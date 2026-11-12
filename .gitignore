@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 .omni-color-backup/
+node_modules/
+package-lock.json
+*.tgz

@@ -1,11 +1,28 @@
 ---
-name: omni-sprite
+name: sprite
+argument-hint: "[descrição do sprite] [--tamanho S|M|L|XL|cena] [--estilo hd-pixel|snes|gba|...] [--anim idle,walk,attack] [--paleta slug|#hex] [--vista lateral|3-4|frontal|iso]"
+user-invocable: true
 description: Cria sprites, tilesets e animações de pixel art grandes e detalhadas no Aseprite pelo servidor pixel-mcp. Use quando o usuário pedir sprite, personagem, tile, ícone, cena de pixel art, spritesheet, ciclo de animação ou um estilo específico (8-bit, 16-bit, GBA, HD pixel, dark fantasy, cyberpunk, isométrico). Also triggers on English requests for sprites, pixel art, sprite sheets and animation cycles. Impõe níveis de resolução, paleta primeiro, direção travada, camadas e revisão visual para que o resultado não fique pequeno e chapado.
 ---
 
-# omni-sprite
+# OmniSprite 🎮✨ — comando `/sprite`
 
 Fluxo cirúrgico de pixel art sobre o servidor `pixel-mcp` do Aseprite (catálogo de ferramentas: `references/mcp-tools.md`). Responda ao usuário no idioma dele.
+
+## Comando `/sprite`
+Uso: `/sprite [descrição] [flags]`. Sem argumentos, pergunte o que criar.
+
+| Flag | Efeito |
+|---|---|
+| `--tamanho S\|M\|L\|XL\|cena` | nível de tamanho (padrão `L`, 128×128) |
+| `--estilo <preset>` | um dos 12 estilos de `references/styles.md` (padrão `hd-pixel`) |
+| `--vista lateral\|3-4\|frontal\|iso` | vista travada (padrão lateral, voltado para a direita) |
+| `--anim idle,walk,attack,...` | ciclos a animar (receitas em `references/animation.md`) |
+| `--paleta <slug-lospec\|#hex,#hex\|ref:caminho>` | paleta dada, do Lospec ou derivada de uma imagem |
+| `--doctor` | só diagnostica: Aseprite encontrado? MCP registrado? (passos do item 0) |
+| `--compilar` | força o fluxo de compilar o Aseprite do código-fonte (item 0.4a) |
+
+Flags informadas dispensam a pergunta correspondente do briefing; o que faltar vai para a rodada de `grill-me`. Ex.: `/sprite cavaleiro dark fantasy --tamanho L --anim idle,walk,attack`.
 
 ## 0. Pré-requisitos (plug and play; verifique uma vez e corrija o que faltar)
 1. **As ferramentas MCP estão visíveis?** (`create_canvas`, `draw_pixels`, `export_sprite`…). Se sim, vá ao passo 1.
@@ -27,7 +44,7 @@ Faça as perguntas abaixo como uma rodada curta de `grill-me` (todas as pergunta
 | Estilo (veja `references/styles.md`) | `hd-pixel` |
 | Nível de tamanho (tabela abaixo) | `L` |
 | Animação? quais ciclos | nenhuma |
-| Paleta: dada / escolher no Lospec / derivar de referência | derivar com a skill `omni-color` se existir, senão Lospec |
+| Paleta: dada / escolher no Lospec / derivar de referência | derivar com a skill `color` (`/color`) se existir, senão Lospec |
 
 ## 2. Níveis de tamanho (vá além do "tamanho de ícone"; continue sendo pixel art)
 | Nível | Tela | Uso típico | Cores |
@@ -47,7 +64,7 @@ Regra: o pixel é **quadrado e nunca escalado com valor não inteiro**. Detalhe 
 4. Passe `use_palette: true` nas chamadas de desenho para cada pixel se ajustar à paleta.
 
 ## 3b. Orientação e pose (trave antes de desenhar; veja `references/orientation-and-pose.md`)
-Declare `view` (lateral / 3/4 / frontal / isométrica), `facing` (desenhe vistas laterais voltadas para a direita), direção da luz, qual mão segura qual prop e para onde capa/cabelo caem. Regras: membros do lado da câmera na frente do torso, os do lado oposto atrás, cabeça voltada para a direção do olhar, capas presas nas costas e na camada mais baixa, um prop por mão, à frente do corpo. Para qualquer coisa animada, **monte o esqueleto primeiro**: juntas + IK de 2 ossos, depois as formas (`examples/knight/rig.py`). Faça os testes de silhueta/espelho/sobreposição após o primeiro render.
+Declare `view` (lateral / 3/4 / frontal / isométrica), `facing` (desenhe vistas laterais voltadas para a direita), direção da luz, qual mão segura qual prop e para onde capa/cabelo caem. Regras: membros do lado da câmera na frente do torso, os do lado oposto atrás, cabeça voltada para a direção do olhar, capas presas nas costas e na camada mais baixa, um prop por mão, à frente do corpo. Para qualquer coisa animada, **monte o esqueleto primeiro**: juntas + IK de 2 ossos, depois as formas (`rig.py` em https://github.com/LimaEdu-7x/omni-sprite/tree/main/examples/knight). Faça os testes de silhueta/espelho/sobreposição após o primeiro render.
 
 ## 4. Ordem de construção (camadas, sempre nesta ordem)
 Crie camadas de baixo para cima com `add_layer`: `bg`, `shadow-cast`, `base`, `shade`, `light`, `detail`, `outline`, `fx`.
@@ -77,7 +94,7 @@ Salve o `.aseprite` (`save_as`), exporte PNG 1×, PNG de prévia ×4 e, para ani
 - Números de frame começam em 1 (`export_sprite` com frame 0 = todos).
 - `draw_pixels` recebe `[{x,y,color}]`, até ~10 000 por chamada; é o que `grid_to_pixels.py` gera.
 - Ao falar com o servidor por stdio: JSON-RPC por linha, escreva bytes com `\n` (CRLF falha com "invalid trailing data").
-- Um exemplo completo (esqueleto → partes sombreadas → camadas → exportações) está em `examples/knight/` do repositório.
+- Um exemplo completo (esqueleto → partes sombreadas → camadas → exportações) está em https://github.com/LimaEdu-7x/omni-sprite/tree/main/examples/knight.
 
 ## Referências extras (carregue sob demanda)
 - `references/build-aseprite.md` – compilar o Aseprite do código-fonte e resolver falhas.
@@ -88,7 +105,7 @@ Salve o `.aseprite` (`save_as`), exporte PNG 1×, PNG de prévia ×4 e, para ani
 - `references/quality-checklist.md` – lista de revisão aprovado/reprovado.
 - `references/resources.md` – 12+ sites e 20+ skills/servidores da comunidade para estudar e integrar.
 - `references/mcp-tools.md` – catálogo de ferramentas.
-- Skills companheiras opcionais: `omni-color` (escolha/espelho de paleta), uma skill de design frontend se os sprites forem para uma UI web.
+- Skills companheiras opcionais: `color` / `/color` (escolha e espelho de paleta), uma skill de design frontend se os sprites forem para uma UI web.
 
 ## Limites honestos
 Desenhar pixel a pixel por chamadas de ferramenta é lento e o modelo não "enxerga" a tela sem exportar. Prefira formas + método da grade + ciclo de revisão; use `analyze_reference` / `downsample_image` quando o usuário enviar uma imagem de referência.

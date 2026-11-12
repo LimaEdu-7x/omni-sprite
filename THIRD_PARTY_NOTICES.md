@@ -1,7 +1,7 @@
 # Créditos e avisos de terceiros
 
 ## grill-me (skill incluída)
-`skills/grill-me/SKILL.md` é uma cópia sem alterações (em inglês, como no original) da skill **grilling** (o motor do "/grill-me") criada por **Matt Pocock**.
+`bundled/grill-me/SKILL.md` é uma cópia sem alterações (em inglês, como no original) da skill **grilling** (o motor do "/grill-me") criada por **Matt Pocock**.
 Origem: https://github.com/mattpocock/skills (também https://www.aihero.dev). Dê uma estrela e siga o projeto original.
 
 ```
@@ -37,4 +37,4 @@ O Aseprite é um produto da **Igara Studio / David Capello**. https://www.asepri
 É *source-available* sob EULA própria: compilar para uso pessoal é permitido, redistribuir binários compilados não. Este repositório não inclui nem redistribui o Aseprite.
 
 ## Recursos da comunidade
-Sites e skills citados em `skills/omni-sprite/references/resources.md` pertencem a seus autores e mantêm suas próprias licenças.
+Sites e skills citados em `references/resources.md` pertencem a seus autores e mantêm suas próprias licenças.

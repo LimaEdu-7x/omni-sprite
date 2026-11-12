@@ -20,7 +20,7 @@ Registre a escolha no briefing: `view=lateral, facing=direita, luz=superior-esqu
 - O torso é uma forma de perfil: elipse de peito + abdômen, não uma peitoral de frente.
 
 ## 3. Esqueleto primeiro, desenho depois
-Defina juntas e comprimentos de segmento e derive as formas: quadril, ombro, cabeça, pé próximo/distante, mão próxima/distante, ângulo do prop. Pernas e braços usam IK de 2 ossos (coxa+canela, braço+antebraço; joelhos dobram para a frente, cotovelos para trás/baixo). Frame = pose(juntas) → formas → sombreamento. Isso mantém as proporções constantes entre os frames e torna os ciclos simples (veja `examples/knight/rig.py`).
+Defina juntas e comprimentos de segmento e derive as formas: quadril, ombro, cabeça, pé próximo/distante, mão próxima/distante, ângulo do prop. Pernas e braços usam IK de 2 ossos (coxa+canela, braço+antebraço; joelhos dobram para a frente, cotovelos para trás/baixo). Frame = pose(juntas) → formas → sombreamento. Isso mantém as proporções constantes entre os frames e torna os ciclos simples (veja `rig.py` em https://github.com/LimaEdu-7x/omni-sprite/tree/main/examples/knight).
 
 ## 4. Testes
 - **Teste de silhueta:** preencha de preto; dá para distinguir frente de costas e para onde olha? Os props devem ler como formas separadas.
