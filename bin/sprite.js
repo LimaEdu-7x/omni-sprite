@@ -8,7 +8,7 @@ const { spawnSync } = require('child_process');
 const prompts = require('prompts');
 
 const CFG = {
-  "name": "sprite",
+  "name": "omni-sprite",
   "pkg": "omni-sprite",
   "title": "OmniSprite 🎮✨",
   "display": "OmniSprite",

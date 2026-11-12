@@ -12,6 +12,22 @@
 
 A OmniSprite ensina a IA um fluxo cirúrgico — **briefing → orientação → paleta → camadas → sombreamento → revisão → animação** — e controla o Aseprite pelo servidor MCP [`pixel-mcp`](https://github.com/willibrandon/pixel-mcp). Um único comando (`npx omni-sprite install`) instala a skill, o comando `/sprite` e o servidor MCP e, se você não tem o Aseprite, a IA oferece baixar o código do GitHub e compilar para você.
 
+## ⚡ Início rápido
+
+```bash
+# 1. Instalar (menu interativo; marque Claude Code, Antigravity, Cursor...)
+npx omni-sprite install
+
+# ou direto do GitHub, sem menu:
+npx github:LimaEdu-7x/omni-sprite install all --mcp
+
+# 2. Reinicie a IA e use o comando
+/sprite cavaleiro com espada --tamanho L --estilo hd-pixel --anim idle,walk,attack
+/sprite --doctor        # confere Aseprite e MCP
+```
+
+O comando `/sprite` aceita `--tamanho`, `--estilo`, `--vista`, `--anim`, `--paleta`, `--doctor` e `--compilar` (detalhes em [Comandos & Modos de Uso](#-comandos--modos-de-uso)). O que você não informar, a IA pergunta.
+
 | 😴 Idle (6 frames) | 🚶 Andar (8 frames) | ⚔️ Ataque (6 frames) |
 |:---:|:---:|:---:|
 | ![Idle](examples/knight/out/knight_idle_x3.gif) | ![Andar](examples/knight/out/knight_walk_x3.gif) | ![Ataque](examples/knight/out/knight_attack_x3.gif) |
@@ -139,11 +155,11 @@ npx omni-sprite install
 ```text
 🎮 OmniSprite Installer
 ? Em quais IAs você deseja instalar a OmniSprite? (Espaço: marcar/desmarcar | Enter: confirmar)
- ❯ [✓] 🪐 Antigravity / Gemini CLI (~/.gemini/config/skills/sprite)
-   [✓] 🟣 Claude Code (~/.claude/skills/sprite)
-   [ ] ⚡ Cursor IDE (.cursor/skills/sprite + .cursor/rules/sprite.mdc)
-   [ ] 🌊 Windsurf (.windsurf/skills/sprite + .windsurfrules)
-   [ ] 📁 Projeto Local (./sprite/)
+ ❯ [✓] 🪐 Antigravity / Gemini CLI (~/.gemini/config/skills/omni-sprite)
+   [✓] 🟣 Claude Code (~/.claude/skills/omni-sprite)
+   [ ] ⚡ Cursor IDE (.cursor/skills/omni-sprite + .cursor/rules/omni-sprite.mdc)
+   [ ] 🌊 Windsurf (.windsurf/skills/omni-sprite + .windsurfrules)
+   [ ] 📁 Projeto Local (./omni-sprite/)
 ? Instalar/registrar agora o servidor MCP do Aseprite (pixel-mcp)? (Y/n)
 ```
 
@@ -174,12 +190,12 @@ npx omni-sprite doctor
 git clone https://github.com/LimaEdu-7x/omni-sprite.git && cd omni-sprite
 
 # Claude Code
-mkdir -p ~/.claude/skills/sprite ~/.claude/skills/grill-me
-cp -r SKILL.md references scripts ~/.claude/skills/sprite/ && cp -r bundled/grill-me/. ~/.claude/skills/grill-me/
+mkdir -p ~/.claude/skills/omni-sprite ~/.claude/skills/grill-me
+cp -r SKILL.md references scripts ~/.claude/skills/omni-sprite/ && cp -r bundled/grill-me/. ~/.claude/skills/grill-me/
 
 # Antigravity / Gemini CLI
-mkdir -p ~/.gemini/config/skills/sprite ~/.gemini/config/skills/grill-me
-cp -r SKILL.md references scripts ~/.gemini/config/skills/sprite/ && cp -r bundled/grill-me/. ~/.gemini/config/skills/grill-me/
+mkdir -p ~/.gemini/config/skills/omni-sprite ~/.gemini/config/skills/grill-me
+cp -r SKILL.md references scripts ~/.gemini/config/skills/omni-sprite/ && cp -r bundled/grill-me/. ~/.gemini/config/skills/grill-me/
 ```
 O MCP também pode ser instalado à mão: `scripts/install-mcp.ps1` (Windows) ou `scripts/install-mcp.sh` (macOS/Linux).
 
