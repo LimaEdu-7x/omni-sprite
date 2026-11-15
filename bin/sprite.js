@@ -9,7 +9,7 @@ const prompts = require('prompts');
 
 const CFG = {
   "name": "omni-sprite",
-  "pkg": "omni-sprite",
+  "pkg": "github:LimaEdu-7x/omni-sprite",
   "title": "OmniSprite 🎮✨",
   "display": "OmniSprite",
   "command": "/sprite",
