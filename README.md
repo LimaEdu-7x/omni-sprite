@@ -12,6 +12,16 @@
 
 A OmniSprite ensina a IA um fluxo cirúrgico — **briefing → orientação → paleta → camadas → sombreamento → revisão → animação** — e controla o Aseprite pelo servidor MCP [`pixel-mcp`](https://github.com/willibrandon/pixel-mcp). Um único comando (`npx omni-sprite install`) instala a skill, o comando `/sprite` e o servidor MCP e, se você não tem o Aseprite, a IA oferece baixar o código do GitHub e compilar para você.
 
+## 📥 Instalar
+
+```text
+npx skills add LimaEdu-7x/omni-sprite
+```
+
+O menu pede os agentes (Claude Code, Codex, Gemini CLI, Cursor e outros) e o escopo (projeto ou global). Use `--list` para só ver o que será instalado.
+
+> Para instalar também o servidor MCP do Aseprite: `npx github:LimaEdu-7x/omni-sprite install all --mcp`.
+
 ## ⚡ Início rápido
 
 ```bash
