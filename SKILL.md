@@ -1,5 +1,5 @@
 ---
-name: sprite
+name: omni-sprite
 argument-hint: "[descrição do sprite] [--tamanho S|M|L|XL|cena] [--estilo hd-pixel|snes|gba|...] [--anim idle,walk,attack] [--paleta slug|#hex] [--vista lateral|3-4|frontal|iso]"
 user-invocable: true
 description: Cria sprites, tilesets e animações de pixel art grandes e detalhadas no Aseprite pelo servidor pixel-mcp. Use quando o usuário pedir sprite, personagem, tile, ícone, cena de pixel art, spritesheet, ciclo de animação ou um estilo específico (8-bit, 16-bit, GBA, HD pixel, dark fantasy, cyberpunk, isométrico). Also triggers on English requests for sprites, pixel art, sprite sheets and animation cycles. Impõe níveis de resolução, paleta primeiro, direção travada, camadas e revisão visual para que o resultado não fique pequeno e chapado.
