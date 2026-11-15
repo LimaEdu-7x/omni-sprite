@@ -5,12 +5,12 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Origin: Brazil](https://img.shields.io/badge/Feito%20no-Brasil%20%F0%9F%87%A7%F0%9F%87%B7-green.svg)](#-projeto-brasileiro-open-source)
-[![Compatible: Claude Code](https://img.shields.io/badge/Compat%C3%ADvel-Claude%20Code-purple.svg)](#-instalação)
+[![Compatible: Claude Code](https://img.shields.io/badge/Compat%C3%ADvel-Claude%20Code-purple.svg)](#-instalar)
 [![MCP: pixel-mcp](https://img.shields.io/badge/MCP-pixel--mcp%20v0.5.0-orange.svg)](https://github.com/willibrandon/pixel-mcp)
 [![npm](https://img.shields.io/npm/v/omni-sprite.svg)](https://www.npmjs.com/package/omni-sprite)
 [![Aseprite: 1.3.10+](https://img.shields.io/badge/Aseprite-1.3.10%2B-teal.svg)](https://www.aseprite.org)
 
-A OmniSprite ensina a IA um fluxo cirúrgico — **briefing → orientação → paleta → camadas → sombreamento → revisão → animação** — e controla o Aseprite pelo servidor MCP [`pixel-mcp`](https://github.com/willibrandon/pixel-mcp). Um único comando (`npx omni-sprite install`) instala a skill, o comando `/sprite` e o servidor MCP e, se você não tem o Aseprite, a IA oferece baixar o código do GitHub e compilar para você.
+A OmniSprite ensina a IA um fluxo cirúrgico — **briefing → orientação → paleta → camadas → sombreamento → revisão → animação** — e controla o Aseprite pelo servidor MCP [`pixel-mcp`](https://github.com/willibrandon/pixel-mcp). Um único comando (`npx skills add LimaEdu-7x/omni-sprite`; com o servidor MCP, `npx omni-sprite install`) instala a skill, o comando `/sprite` e o servidor MCP e, se você não tem o Aseprite, a IA oferece baixar o código do GitHub e compilar para você.
 
 ## 📥 Instalar
 
@@ -20,18 +20,23 @@ npx skills add LimaEdu-7x/omni-sprite
 
 O menu pede os agentes (Claude Code, Codex, Gemini CLI, Cursor e outros) e o escopo (projeto ou global). Use `--list` para só ver o que será instalado.
 
-> Para instalar também o servidor MCP do Aseprite: `npx github:LimaEdu-7x/omni-sprite install all --mcp`.
+**Alternativa (instalador próprio, instala também a skill `grill-me` e o servidor MCP do Aseprite):**
+
+```bash
+npx omni-sprite install all --mcp              # todas as IAs, com MCP
+npx omni-sprite install claude antigravity --no-mcp
+npx github:LimaEdu-7x/omni-sprite install
+npx omni-sprite mcp --aseprite "C:\caminho\aseprite.exe"   # só o MCP
+npx omni-sprite doctor                         # diagnóstico do ambiente
+```
+
+> `npx skills add` copia só a skill. Para o servidor MCP use o instalador próprio acima ou `scripts/install-mcp.ps1` / `scripts/install-mcp.sh`.
+> Cursor e Windsurf: o instalador próprio cria a pasta da skill e um ponteiro de regra; esse caminho é **experimental**.
 
 ## ⚡ Início rápido
 
 ```bash
-# 1. Instalar (menu interativo; marque Claude Code, Antigravity, Cursor...)
-npx omni-sprite install
-
-# ou direto do GitHub, sem menu:
-npx github:LimaEdu-7x/omni-sprite install all --mcp
-
-# 2. Reinicie a IA e use o comando
+# Depois de instalar (veja Instalar), reinicie a IA e use o comando:
 /sprite cavaleiro com espada --tamanho L --estilo hd-pixel --anim idle,walk,attack
 /sprite --doctor        # confere Aseprite e MCP
 ```
@@ -153,49 +158,7 @@ Flags informadas dispensam a pergunta correspondente; o que faltar vai para uma 
 
 ---
 
-## 📦 Como Instalar nas Suas IAs
-
-### 1. Instalador Interativo via Terminal (Recomendado)
-Execute `npx omni-sprite install` para abrir o menu com caixas de seleção. Use as **Setas** para navegar, **Espaço** para marcar as IAs e **Enter** para concluir:
-
-```bash
-npx omni-sprite install
-```
-
-```text
-🎮 OmniSprite Installer
-? Em quais IAs você deseja instalar a OmniSprite? (Espaço: marcar/desmarcar | Enter: confirmar)
- ❯ [✓] 🪐 Antigravity / Gemini CLI (~/.gemini/config/skills/omni-sprite)
-   [✓] 🟣 Claude Code (~/.claude/skills/omni-sprite)
-   [ ] ⚡ Cursor IDE (.cursor/skills/omni-sprite + .cursor/rules/omni-sprite.mdc)
-   [ ] 🌊 Windsurf (.windsurf/skills/omni-sprite + .windsurfrules)
-   [ ] 📁 Projeto Local (./omni-sprite/)
-? Instalar/registrar agora o servidor MCP do Aseprite (pixel-mcp)? (Y/n)
-```
-
-O instalador copia `SKILL.md`, `references/` e `scripts/`, instala junto a skill **`grill-me`** (de Matt Pocock, MIT; se você já tiver uma, a sua é mantida) e, se você aceitar, baixa o `pixel-mcp` com **checagem SHA-256**, grava a configuração e registra o servidor no Claude Code.
-
-> Cursor e Windsurf: a instalação cria a pasta da skill e um ponteiro de regra; esse caminho é **experimental** (testei os arquivos gerados, não o comportamento dentro dessas IDEs).
-
-#### Instalação direta sem menu (headless)
-```bash
-# Todas as IAs suportadas de uma vez, com MCP:
-npx omni-sprite install all --mcp
-
-# IAs específicas, sem mexer no MCP:
-npx omni-sprite install claude antigravity --no-mcp
-
-# Direto do repositório no GitHub:
-npx github:LimaEdu-7x/omni-sprite install
-
-# Só o MCP (com caminho do Aseprite, se a detecção não achar):
-npx omni-sprite mcp --aseprite "C:\caminho\aseprite.exe"
-
-# Diagnóstico do ambiente:
-npx omni-sprite doctor
-```
-
-### 2. Instalação manual
+## 🛠️ Instalação Manual
 ```bash
 git clone https://github.com/LimaEdu-7x/omni-sprite.git && cd omni-sprite
 
@@ -211,7 +174,7 @@ O MCP também pode ser instalado à mão: `scripts/install-mcp.ps1` (Windows) ou
 
 Requisitos: Node 16.7+ (para o `npx`), Aseprite 1.3.10+ (não incluído), Claude Code ou outro cliente MCP, Python 3 só para o script auxiliar e o exemplo.
 
-### 3. 🕹️ Não tem Aseprite?
+### 🕹️ Não tem Aseprite?
 
 As skills instalam do mesmo jeito. No primeiro `/sprite`, a IA pergunta o que você prefere:
 
